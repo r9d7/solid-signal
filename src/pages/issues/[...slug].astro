@@ -1,0 +1,25 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import Shell from "~/layouts/Shell.astro";
+
+export async function getStaticPaths() {
+  const issues = await getCollection("issues");
+
+  return issues.map((issue) => ({
+    params: { slug: issue.slug },
+    props: { issue },
+  }));
+}
+
+type Props = { issue: CollectionEntry<"issues"> };
+
+const { issue } = Astro.props;
+const { Content } = await issue.render();
+---
+
+<Shell>
+  <div class="max-w-screen-sm mx-auto">
+    <Content />
+  </div>
+</Shell>
