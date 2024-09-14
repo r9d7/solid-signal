@@ -7,4 +7,5 @@ import UnoCss from "unocss/astro";
 export default defineConfig({
   site: "https://example.com",
   integrations: [mdx(), sitemap(), UnoCss({ injectReset: true })],
+  devToolbar: { enabled: false },
 });

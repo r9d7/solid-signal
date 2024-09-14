@@ -2,17 +2,12 @@
   --background: 0 0% 100%;
   --foreground: 0 0% 13.3%;
 
-  --muted: 0 0% 92%;
-  --muted-foreground: 0 0% 50%;
-
-  --accent: 273 100% 50%;
+  --accent: 213 48.2% 38.6%;
   --accent-foreground: var(--background);
 
-  --border: var(--muted);
+  --input: 216 12.2% 83.9%;
 
   --ring: var(--accent);
-
-  --radius: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,9 +15,10 @@
     --background: 0 0% 13.3%;
     --foreground: 0 0% 100%;
 
-    --muted: 0 0% 8%;
+    --accent: 214 100% 86.1%;
+    --accent-foreground: var(--background);
 
-    --accent-foreground: var(--foreground);
+    --input: 0 0% 45.1%;
   }
 }
 
@@ -33,7 +29,7 @@ body {
 
   &,
   & * {
-    @apply transition-property-colors transition-duration-150 transition-ease-in-out;
+    @apply transition-property-colors transition-property-border transition-duration-150 transition-ease-in-out;
   }
 }
 
@@ -43,4 +39,9 @@ body {
   &:focus {
     @apply focus-(outline-none ring-2 ring-ring ring-offset-2 ring-offset-background);
   }
+}
+
+a {
+  @apply text-accent;
+  @apply border-b border-accent hover:border-b-6;
 }
