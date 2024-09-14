@@ -28,4 +28,7 @@ export default defineConfig({
       ring: "hsl(var(--ring))",
     },
   },
+  shortcuts: {
+    "ring-focus": "ring-2 ring-ring ring-offset-2 ring-offset-background",
+  },
 });
