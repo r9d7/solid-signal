@@ -37,7 +37,7 @@ body {
   @apply border-border;
 
   &:focus {
-    @apply focus-(outline-none ring-focus);
+    @apply focus-visible-(outline-none ring-focus);
   }
 }
 
