@@ -3,23 +3,43 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 import Shell from "~/layouts/Shell.astro";
 
+import SubscriptionForm from "~/components/SubscriptionForm.astro";
+
 export async function getStaticPaths() {
   const issues = await getCollection("issues");
 
-  return issues.map((issue) => ({
+  return issues.map((issue, i) => ({
     params: { slug: issue.slug },
-    props: { issue },
+    props: { issue, prev: issues[i - 1], next: issues[i + 1] },
   }));
 }
 
-type Props = { issue: CollectionEntry<"issues"> };
+type Props = {
+  issue: CollectionEntry<"issues">;
+  prev?: CollectionEntry<"issues">;
+  next?: CollectionEntry<"issues">;
+};
 
-const { issue } = Astro.props;
+const { issue, prev, next } = Astro.props;
 const { Content } = await issue.render();
 ---
 
 <Shell>
-  <div class="max-w-screen-sm mx-auto">
+  <div class="max-w-screen-sm mx-auto space-y-4">
+    <div class="bg-[#4f88c666] p-3 space-y-2.5 rounded-lg">
+      <SubscriptionForm placeholder="Want more? Type your email address here" />
+      <p class="text-center"><small>Easy to unsubscribe at any time.</small></p>
+    </div>
+
     <Content />
+
+    <nav class="flex justify-between">
+      <div>
+        {prev && <a href={`/issues/${prev.slug}`}>👈 Prev</a>}
+      </div>
+      <div>
+        {next && <a href={`/issues/${next.slug}`}>Next 👉</a>}
+      </div>
+    </nav>
   </div>
 </Shell>
