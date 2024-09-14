@@ -1,0 +1,99 @@
+---
+import { getCollection } from "astro:content";
+
+import { SITE_DESCRIPTION, SITE_TITLE } from "~/constants";
+
+import "~/styles/global.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+  image?: string;
+
+  isCenteredLayout?: boolean;
+};
+
+const {
+  title: titleProp,
+  description = SITE_DESCRIPTION,
+  image = "TODO: ADD PLACEHOLDER",
+
+  isCenteredLayout,
+} = Astro.props;
+
+const title = [SITE_TITLE, titleProp].filter(Boolean).join(" + ");
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const [latestIssue] = (await getCollection("issues")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {/* Global Metadata  */}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={title}
+      href={new URL("rss.xml", Astro.site)}
+    />
+    <!-- TODO: Add sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Canonical URL  */}
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* Primary Meta Tags  */}
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    {/* Open Graph / Facebook  */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    {/* Twitter  */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+  </head>
+
+  <body>
+    <div class="flex flex-col gap-8 py-8 container min-h-screen w-11/12 sm:w-10/12 mx-auto">
+      <nav class="flex justify-between">
+        <div>
+          <a href="/">Home</a>
+        </div>
+
+        <div class="space-x-2">
+          <a href="/issues">Archives</a>
+          <a href={`/issues/${latestIssue.slug}`}>Latest issue</a>
+          <a href="/rss.xml">RSS feed</a>
+        </div>
+      </nav>
+
+      <main class:list={{
+        "grow-1": true,
+        "flex justify-center items-center": isCenteredLayout
+      }}>
+        <slot />
+      </main>
+
+      <footer class="text-center">
+        written by <a href="https://r9d7.github.io/" target="_blank">r9d7</a>&apos;s 🙌 on too much ☕
+      </footer>
+    </div>
+  </body>
+</html>

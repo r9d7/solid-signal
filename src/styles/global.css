@@ -29,7 +29,7 @@ body {
 
   &,
   & * {
-    @apply transition-property-colors transition-property-border transition-duration-150 transition-ease-in-out;
+    @apply transition-property-colors transition-duration-150 transition-ease-in-out;
   }
 }
 
@@ -42,6 +42,12 @@ body {
 }
 
 a {
-  @apply text-accent;
-  @apply border-b border-accent hover:border-b-6;
+  @apply text-accent relative;
+  @apply hover:after:border-accent;
+
+  &::after {
+    @apply content-[""] h-1;
+    @apply absolute left-0 right-0 -bottom-px;
+    @apply border border-transparent border-b-accent;
+  }
 }

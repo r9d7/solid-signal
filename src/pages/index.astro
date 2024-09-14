@@ -1,9 +1,9 @@
 ---
-import BaseHead from "~/components/BaseHead.astro";
+import { getCollection } from "astro:content";
+
+import Shell from "~/layouts/Shell.astro";
 
 import { sample } from "~/lib/utils";
-
-import { SITE_TITLE, SITE_DESCRIPTION } from "~/consts";
 
 const headings = [
   "Discover the power of Solid.js: Weekly insights, tips, and community highlights delivered straight to your inbox.",
@@ -15,52 +15,41 @@ const headings = [
   "Boost your Solid.js reception with Solid Signal: Clear, concise updates delivered every week.",
   "Solid Signal: Amplifying the best of Solid.js development, straight to your inbox every week.",
   "Stay on the same wavelength as Solid.js experts with Solid Signal: Your weekly transmission of tips, tricks, and trends.",
-  "Solid Signal: Cutting through the noise with focused Solid.js content, broadcasting weekly."
-]
+  "Solid Signal: Cutting through the noise with focused Solid.js content, broadcasting weekly.",
+];
+
+const [latestIssue] = (await getCollection("issues")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+<Shell isCenteredLayout>
+  <div class="flex flex-col items-center gap-8 max-w-[65ch] text-center">
+    <img
+      alt="Solid Signal Newsletter Logo"
+      src="/logo-mark.svg"
+      class="inline-block w-[140px] md:w-[200px]"
+    />
 
-  <body>
-    <div class="flex flex-col gap-8 py-8 container min-h-screen w-11/12 sm:w-10/12 mx-auto">
-      <nav class="flex justify-between">
-        <div>
-          <a href="">Home</a>
-        </div>
+    <h3 class="text-lg md:text-2xl font-semibold">{sample(headings)}</h3>
 
-        <div class="space-x-2">
-          <a href="">Archives</a>
-          <a href="">Latest issue</a>
-          <a href="">RSS feed</a>
-        </div>
-      </nav>
-
-      <main class="flex justify-center items-center grow-1">
-        <div
-          class="flex flex-col items-center gap-8 max-w-[65ch] text-center"
+    <div class="flex flex-col gap-2">
+      <form class="space-x-1">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email address"
+          class="bg-background py-2 px-4 border border-input rounded-md"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-accent text-accent-foreground font-medium py-2 px-4 border border-accent rounded-md disabled:opacity-50"
+          >Register</button
         >
-          <img alt="Solid Signal Newsletter Logo" src="/logo-mark.svg" class="inline-block w-[140px] md:w-[200px]" />
+      </form>
 
-          <h3 class="text-lg md:text-2xl font-semibold">{sample(headings)}</h3>
-
-          <div class="flex flex-col gap-2">
-            <form class="space-x-1">
-              <input type="email" name="email" placeholder="Email address" class="bg-background py-2 px-4 border border-input rounded-md" required>
-              <button type="submit" class="bg-accent text-accent-foreground font-medium py-2 px-4 border border-accent rounded-md disabled:opacity-50">Register</button>
-            </form>
-  
-            <p>Check out the <a href="">latest issue</a>.</p>
-          </div>
-        </div>
-      </main>
-
-      <footer class="text-center">
-        written by <a href="https://r9d7.github.io/" target="_blank">r9d7</a>&apos;s 🙌 on a lot of ☕
-      </footer>
+      <p>Check out the <a href={`/issues/${latestIssue.slug}`}>latest issue</a>.</p>
     </div>
-  </body>
-</html>
+  </div>
+</Shell>
