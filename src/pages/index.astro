@@ -38,7 +38,7 @@ const [latestIssue] = (await getCollection("issues")).sort(
     <div class="flex flex-col gap-2">
       <SubscriptionForm />
 
-      <p>Check out the <a href={`/issues/${latestIssue.slug}`}>latest issue</a>.</p>
+      <p>Check out the <a href={`/issues/${latestIssue.id}`}>latest issue</a>.</p>
     </div>
   </div>
 </Shell>

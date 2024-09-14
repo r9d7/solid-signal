@@ -4,12 +4,18 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Shell from "~/layouts/Shell.astro";
 
 import SubscriptionForm from "~/components/SubscriptionForm.astro";
+import HighlightWrapper from "~/components/issues/HighlightWrapper.astro";
+import Separator from "~/components/issues/Separator.astro";
+
+import { forwardReturned } from "~/lib/utils";
+
+import { AUTHOR_SCREEN_NAME, AUTHOR_URL } from "~/constants";
 
 export async function getStaticPaths() {
   const issues = await getCollection("issues");
 
   return issues.map((issue, i) => ({
-    params: { slug: issue.slug },
+    params: { slug: issue.id },
     props: { issue, prev: issues[i - 1], next: issues[i + 1] },
   }));
 }
@@ -21,12 +27,163 @@ type Props = {
 };
 
 const { issue, prev, next } = Astro.props;
-const { Content } = await issue.render();
+
+const SECTION_TYPE_TITLE: {
+  [k in (typeof issue.data.sections)[number]["type"]]: any;
+} = {
+  latest_from_solid: "Latest from the creators of Solid.js",
+  community_spotlights: "Community spotlights",
+  upcoming_events: "Upcoming events and meetups",
+  quick_tips: "Quick tips to level up your skills",
+  extensive_articles: "In-depth articles",
+};
 ---
 
 <Shell>
   <div class="max-w-screen-sm mx-auto space-y-4">
-    <Content />
+    <div>
+      <div class="text-right">
+        <a href="" class="text-xs">read in your browser</a>
+      </div>
+      <br />
+      <img
+        alt="Solid Signal Newsletter Logo"
+        src="/logo-mark.svg"
+        class="mx-auto w-[140px] md:w-[200px]"
+      />
+      <br />
+      <p>Hey Solid.js enthusiast,</p>
+      <br />
+      <p>
+        Welcome to your weekly Solid Signal issue, you're tuned in to the pulse
+        of our awesome community. This is issue <a href={``}
+          ><strong>#{issue.id}</strong></a
+        >
+        sent to you on September 14, 2024. Thanks for being here - your passion keeps
+        Solid.js thriving!
+      </p>
+      <br />
+      <section class="bg-[#4f88c666] rounded-lg p-3 space-y-2.5">
+        <header class="uppercase text-xs font-bold leading-none opacity-50">
+          In this broadcast:
+        </header>
+
+        <ul>
+          {
+            issue.data.sections.map((s) => (
+              <li>{`~ ${SECTION_TYPE_TITLE[s.type]}`}</li>
+            ))
+          }
+        </ul>
+
+        {
+          forwardReturned(
+            issue.data.sponsors?.find((s) => s.kind === 1),
+            (s) => (
+              <div class="p-1 border border-foreground/30 border-dashed rounded-md font-bold text-xs text-center">
+                <span class="uppercase">{s.customCopy || "Together with"}</span>{" "}
+                {s.url?.length ? <a href={s.url}>{s.name}</a> : s.name}
+              </div>
+            ),
+          )
+        }
+      </section>
+      <br />
+      {
+        issue.data.sections.map((s, sI) => {
+          const WrapperComponent = (
+            ["upcoming_events", "extensive_articles"] as (typeof s.type)[]
+          ).includes(s.type)
+            ? HighlightWrapper
+            : Fragment;
+
+          return (
+            <>
+              <WrapperComponent>
+                <section class="">
+                  <h2
+                    class:list={{
+                      "text-2xl font-bold relative leading-none": true,
+                      "[&::before]-(content-['_'] absolute w-full h-px top-1/2 transform-y-1/2 border-t border-border border-dashed)": true,
+                    }}
+                  >
+                    <span class="bg-background relative pr-2">
+                      {SECTION_TYPE_TITLE[s.type]}
+                    </span>
+                  </h2>
+
+                  <br />
+
+                  <div class="space-y-2">
+                    {s.content.map((c) => {
+                      return (
+                        <div>
+                          <p>
+                            <span class="text-[1.1em]">
+                              {c.type === "generic-link" ? "📝" : "🍿"}{" "}
+                              {c.url ? (
+                                <a href={c.url} target="_blank">
+                                  {c.title}
+                                </a>
+                              ) : (
+                                c.title
+                              )}
+                            </span>
+                            {Boolean(c.summary?.length) && ` - ${c.summary}`}
+                          </p>
+                          <p>
+                            {Boolean(c.author?.length) && (
+                              <small class="uppercase text-xs opacity-50">
+                                {c.authorUrl ? (
+                                  <a href={c.authorUrl}>{c.author}</a>
+                                ) : (
+                                  c.author
+                                )}
+                              </small>
+                            )}
+                            {Boolean(c.sponsorUrl?.length) && (
+                              <a
+                                href={c.sponsorUrl}
+                                class="uppercase text-0.6em border border-border rounded-sm p-px inline-block [&:after]:hidden"
+                              >
+                                Sponsor
+                              </a>
+                            )}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              </WrapperComponent>
+              <br />
+              {sI !== issue.data.sections.length - 1 && <br />}
+            </>
+          );
+        })
+      }
+      <i
+        >That's a wrap for this week, see you in another 7 revolutions! Stay
+        reactive, stay solid, and may your renders be swift and your
+        dependencies few 😂.</i
+      >
+      <br />
+      <Separator />
+      <footer class="text-center text-xs space-y-2">
+        <p>
+          Collected content by <a href={AUTHOR_URL} target="_blank"
+            >{AUTHOR_SCREEN_NAME}</a
+          >. Help make this newsletter better — share your projects in <a
+            href="https://discord.com/invite/solidjs"
+            target="_blank">Solid's Discord</a
+          >.
+        </p>
+
+        <p><a href="http://localhost:4321" target="_blank">Unsubscribe</a>.</p>
+      </footer>
+
+      <Separator />
+    </div>
 
     <div class="bg-[#4f88c666] p-3 space-y-2.5 rounded-lg">
       <SubscriptionForm
@@ -39,10 +196,10 @@ const { Content } = await issue.render();
 
     <nav class="flex justify-between">
       <div>
-        {prev && <a href={`/issues/${prev.slug}`}>👈 Prev</a>}
+        {prev && <a href={`/issues/${prev.id}`}>👈 Prev</a>}
       </div>
       <div>
-        {next && <a href={`/issues/${next.slug}`}>Next 👉</a>}
+        {next && <a href={`/issues/${next.id}`}>Next 👉</a>}
       </div>
     </nav>
   </div>

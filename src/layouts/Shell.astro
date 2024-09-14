@@ -2,7 +2,12 @@
 import { getCollection } from "astro:content";
 import { ViewTransitions } from "astro:transitions";
 
-import { SITE_DESCRIPTION, SITE_TITLE } from "~/constants";
+import {
+  AUTHOR_SCREEN_NAME,
+  AUTHOR_URL,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+} from "~/constants";
 
 import "~/styles/global.css";
 
@@ -26,7 +31,7 @@ const title = [SITE_TITLE, titleProp].filter(Boolean).join(" + ");
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const [latestIssue] = (await getCollection("issues")).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 ---
 
@@ -72,18 +77,18 @@ const [latestIssue] = (await getCollection("issues")).sort(
     <ViewTransitions />
   </head>
 
-  <body>
+  <body class="relative">
     <div
       class="flex flex-col gap-8 py-8 container min-h-screen w-11/12 sm:w-10/12 mx-auto"
     >
-      <nav class="flex justify-between">
+      <nav class="flex justify-between sticky top-8">
         <div>
           <a href="/">Home</a>
         </div>
 
         <div class="space-x-2">
           <a href="/issues">Archives</a>
-          <a href={`/issues/${latestIssue.slug}`}>Latest issue</a>
+          <a href={`/issues/${latestIssue.id}`}>Latest issue</a>
           <a href="/rss.xml">RSS feed</a>
         </div>
       </nav>
@@ -99,7 +104,10 @@ const [latestIssue] = (await getCollection("issues")).sort(
       </main>
 
       <footer class="text-center">
-        built and curated by <a href="https://r9d7.github.io/" target="_blank" data-astro-reload>r9d7</a
+        built and curated by <a
+          href={AUTHOR_URL}
+          target="_blank"
+          data-astro-reload>{AUTHOR_SCREEN_NAME}</a
         > on too much ☕
       </footer>
     </div>

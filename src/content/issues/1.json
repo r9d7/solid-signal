@@ -1,0 +1,107 @@
+{
+  "$schema": "../../../.astro/collections/issues.schema.json",
+  "publishDate": "2024-09-14",
+  "sections": [
+    {
+      "type": "latest_from_solid",
+      "content": [
+        {
+          "type": "generic-link",
+          "title": "Random Title Just Testing",
+          "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius scelerisque nisl, ut euismod nibh rhoncus eget.",
+          "author": "John Doe"
+        },
+        {
+          "type": "video-link",
+          "url": "http://localhost:4321/",
+          "title": "Some More Testing Because Why Shouldn't I?",
+          "summary": "Maecenas a leo elementum, tristique risus quis, consequat nulla. Maecenas ex eros, efficitur a cursus vel, tincidunt in elit. Nam eu lobortis nibh.",
+          "author": "John Doe",
+          "authorUrl": "http://localhost:4321/"
+        }
+      ]
+    },
+    {
+      "type": "community_spotlights",
+      "content": [
+        {
+          "type": "generic-link",
+          "title": "Random Title Just Testing",
+          "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius scelerisque nisl, ut euismod nibh rhoncus eget.",
+          "author": "John Doe"
+        },
+        {
+          "type": "video-link",
+          "url": "http://localhost:4321/",
+          "title": "Some More Testing Because Why Shouldn't I?",
+          "summary": "Maecenas a leo elementum, tristique risus quis, consequat nulla. Maecenas ex eros, efficitur a cursus vel, tincidunt in elit. Nam eu lobortis nibh.",
+          "author": "John Doe",
+          "authorUrl": "http://localhost:4321/"
+        }
+      ]
+    },
+    {
+      "type": "upcoming_events",
+      "content": [
+        {
+          "type": "generic-link",
+          "title": "Random Title Just Testing",
+          "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius scelerisque nisl, ut euismod nibh rhoncus eget.",
+          "author": "John Doe"
+        },
+        {
+          "type": "video-link",
+          "url": "http://localhost:4321/",
+          "title": "Some More Testing Because Why Shouldn't I?",
+          "summary": "Maecenas a leo elementum, tristique risus quis, consequat nulla. Maecenas ex eros, efficitur a cursus vel, tincidunt in elit. Nam eu lobortis nibh.",
+          "author": "John Doe",
+          "authorUrl": "http://localhost:4321/"
+        }
+      ]
+    },
+    {
+      "type": "quick_tips",
+      "content": [
+        {
+          "type": "generic-link",
+          "title": "Random Title Just Testing",
+          "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius scelerisque nisl, ut euismod nibh rhoncus eget.",
+          "author": "John Doe"
+        },
+        {
+          "type": "video-link",
+          "url": "http://localhost:4321/",
+          "title": "Some More Testing Because Why Shouldn't I?",
+          "summary": "Maecenas a leo elementum, tristique risus quis, consequat nulla. Maecenas ex eros, efficitur a cursus vel, tincidunt in elit. Nam eu lobortis nibh.",
+          "author": "John Doe",
+          "authorUrl": "http://localhost:4321/"
+        }
+      ]
+    },
+    {
+      "type": "extensive_articles",
+      "content": [
+        {
+          "type": "generic-link",
+          "title": "Random Title Just Testing",
+          "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius scelerisque nisl, ut euismod nibh rhoncus eget.",
+          "author": "John Doe"
+        },
+        {
+          "type": "video-link",
+          "url": "http://localhost:4321/",
+          "title": "Some More Testing Because Why Shouldn't I?",
+          "summary": "Maecenas a leo elementum, tristique risus quis, consequat nulla. Maecenas ex eros, efficitur a cursus vel, tincidunt in elit. Nam eu lobortis nibh.",
+          "author": "John Doe",
+          "authorUrl": "http://localhost:4321/"
+        }
+      ]
+    }
+  ],
+  "sponsors": [
+    {
+      "kind": 1,
+      "name": "Testing"
+    }
+  ]
+}

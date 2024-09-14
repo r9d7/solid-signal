@@ -16,8 +16,8 @@ const issues = (await getCollection("issues")).sort(
       {
         issues.map((issue) => (
           <li>
-            <a href={`/issues/${issue.slug}`} class="inline-block">
-              Solid Signal Issue #{issue.id.replace(".md", "").padStart(3, "0")}
+            <a href={`/issues/${issue.id}`} class="inline-block">
+              Solid Signal Issue #{issue.id.replace(/\.mdx?/, "").padStart(3, "0")}
             </a>{" "}
             — <FormattedDate date={issue.data.publishDate} />
           </li>

@@ -24,6 +24,7 @@ export default defineConfig({
         foreground: "hsl(var(--accent-foreground))",
       },
 
+      border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",
     },

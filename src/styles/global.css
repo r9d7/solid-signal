@@ -5,8 +5,8 @@
   --accent: 213 48.2% 38.6%;
   --accent-foreground: var(--background);
 
-  --input: 216 12.2% 83.9%;
-
+  --border: 216 12.2% 83.9%;
+  --input: var(--border);
   --ring: var(--accent);
 }
 
@@ -18,7 +18,7 @@
     --accent: 214 100% 86.1%;
     --accent-foreground: var(--background);
 
-    --input: 0 0% 45.1%;
+    --border: 0 0% 45.1%;
   }
 }
 
