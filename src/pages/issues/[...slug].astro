@@ -26,12 +26,16 @@ const { Content } = await issue.render();
 
 <Shell>
   <div class="max-w-screen-sm mx-auto space-y-4">
-    <div class="bg-[#4f88c666] p-3 space-y-2.5 rounded-lg">
-      <SubscriptionForm placeholder="Want more? Type your email address here" />
-      <p class="text-center"><small>Easy to unsubscribe at any time.</small></p>
-    </div>
-
     <Content />
+
+    <div class="bg-[#4f88c666] p-3 space-y-2.5 rounded-lg">
+      <SubscriptionForm
+        placeholder="Type your email address here to join our community!"
+      />
+      <p class="text-center">
+        <small>Your inbox, your rules. Easy one click unsubscribe.</small>
+      </p>
+    </div>
 
     <nav class="flex justify-between">
       <div>
