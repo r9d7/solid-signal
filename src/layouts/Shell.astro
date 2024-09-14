@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { ViewTransitions } from "astro:transitions";
 
 import { SITE_DESCRIPTION, SITE_TITLE } from "~/constants";
 
@@ -68,10 +69,14 @@ const [latestIssue] = (await getCollection("issues")).sort(
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <ViewTransitions />
   </head>
 
   <body>
-    <div class="flex flex-col gap-8 py-8 container min-h-screen w-11/12 sm:w-10/12 mx-auto">
+    <div
+      class="flex flex-col gap-8 py-8 container min-h-screen w-11/12 sm:w-10/12 mx-auto"
+    >
       <nav class="flex justify-between">
         <div>
           <a href="/">Home</a>
@@ -84,15 +89,19 @@ const [latestIssue] = (await getCollection("issues")).sort(
         </div>
       </nav>
 
-      <main class:list={{
-        "grow-1": true,
-        "flex justify-center items-center": isCenteredLayout
-      }}>
+      <main
+        transition:animate="fade"
+        class:list={{
+          "grow-1": true,
+          "flex justify-center items-center": isCenteredLayout,
+        }}
+      >
         <slot />
       </main>
 
       <footer class="text-center">
-        written by <a href="https://r9d7.github.io/" target="_blank">r9d7</a>&apos;s 🙌 on too much ☕
+        written by <a href="https://r9d7.github.io/" target="_blank">r9d7</a
+        >&apos;s 🙌 on too much ☕
       </footer>
     </div>
   </body>
