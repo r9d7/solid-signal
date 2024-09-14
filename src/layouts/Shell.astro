@@ -45,7 +45,6 @@ const [latestIssue] = (await getCollection("issues")).sort(
       title={title}
       href={new URL("rss.xml", Astro.site)}
     />
-    <!-- TODO: Add sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     {/* Canonical URL  */}

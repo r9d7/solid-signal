@@ -5,7 +5,7 @@ import UnoCss from "unocss/astro";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://example.com", // TODO: Replace
   integrations: [mdx(), sitemap(), UnoCss({ injectReset: true })],
   devToolbar: { enabled: false },
 });
